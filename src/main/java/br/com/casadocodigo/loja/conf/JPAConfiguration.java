@@ -25,7 +25,7 @@ public class JPAConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUsername("root");
 		dataSource.setPassword("pc1000");
-		dataSource.setUrl("jdbc:mysql://localhost/casadocodigo");
+		dataSource.setUrl("jdbc:mysql://localhost/casadocodigo_spring");
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		factoryBean.setDataSource(dataSource);
 		
