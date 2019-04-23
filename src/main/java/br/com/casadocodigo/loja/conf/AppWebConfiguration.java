@@ -1,8 +1,10 @@
 package br.com.casadocodigo.loja.conf;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.google.common.cache.CacheBuilder;
 
 import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.dao.ProdutoDAO;
@@ -78,7 +82,13 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
     
     @Bean
     public CacheManager cacheManager(){// gerenciador de cache para que o Spring o use
-        return new ConcurrentMapCacheManager();//gerenciador de cache que o Spring já fornece 
+    	//A documentação recomenda o uso do Guava, um framework de cache fornecido pelo Google, que permite mais configurações    	
+    	CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder()
+    			.maximumSize(100) //tamanho máximo de elementos que serão guardados no cache  
+    			.expireAfterAccess(5, TimeUnit.MINUTES);//cache será expirado a cada cinco minutos.
+    	  GuavaCacheManager manager = new GuavaCacheManager();
+    	  manager.setCacheBuilder(builder);
+    	  return manager; 
     }
 }
 	
