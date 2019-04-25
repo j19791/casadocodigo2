@@ -81,6 +81,9 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	}
     
     @Override
+    //o Servlet do Spring está processando todas as requisições e procurando cada um dos recursos requisitados (css, js) dentro dele. O Spring está procurando arquivos JPS's com os mesmos nomes dos arquivos de estilo e script que adicionamos antes.
+    //Dizer para o Spring que as requisições referentes a arquivos de script, estilo, fontes e imagens não devem ser processadas pelo servlet do Spring, mas sim pelo servlet default da aplicaçao.
+    
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
