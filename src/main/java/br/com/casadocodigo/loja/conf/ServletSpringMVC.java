@@ -10,8 +10,8 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletInitializer{
 
 	@Override
-	protected Class<?>[] getRootConfigClasses() {
-		return null;
+	protected Class<?>[] getRootConfigClasses() {//carrega configurações logo ao iniciar a aplicação
+		return new Class[]{SecurityConfiguration.class};//para que a classe a classe SecurityConfiguration (Spring Security) ser reconhecida pelo Spring
 	}
 
 	@Override
