@@ -1,12 +1,22 @@
 package br.com.casadocodigo.loja.conf;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity // habilita segurança de forma automática
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {//armazenar as configurações de segurança e configura (Adapter)
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private UserDetailsService usuarioDao;
+
+
+//armazenar as configurações de segurança e configura (Adapter)
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {//descrever os padrões de URLs que queremos ou não bloquear.
@@ -23,5 +33,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {//armaz
 	    .and().formLogin();
 	}
 	
+	
+	@Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(usuarioDao).passwordEncoder(new BCryptPasswordEncoder());;
+    }
 	
 }
