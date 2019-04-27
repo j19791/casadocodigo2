@@ -43,14 +43,7 @@
 					    <li><a href="/pages/sobre-a-casa-do-codigo" rel="nofollow">Sobre Nós</a></li>
 					    
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-					  <li>
-					    <a href="#">
-					        <security:authentication property="principal" var="usuario"/>
-					        Usuario: ${usuario.username}
-					    </a>
-					  </li>
-					</ul>
+					
 				</nav>
 			</div>
 		</div>
