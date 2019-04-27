@@ -27,4 +27,5 @@ senha do usuário: 123456
 [BCrypt Calculator](https://www.dailycred.com/article/bcrypt-calculator)
 
 
-
+## Logout
+(http://localhost:8080/casadocodigo/logout)

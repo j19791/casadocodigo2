@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity // habilita segurança de forma automática
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -28,9 +29,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    .antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN") //bloqueando o acesso para todos que não são ADMIN
 	    .antMatchers(HttpMethod.GET, "/produtos").hasRole("ADMIN") //bloqueando o acesso para todos que não são ADMIN
 	    .antMatchers("/produtos/**").permitAll() //permitindo o acesso a todos
+	    .antMatchers("/resources/**").permitAll() //desbloqueia os resources de CSS e JS do Bootstrap
 	    .antMatchers("/").permitAll() //permitindo o acesso a todos
 	    .anyRequest().authenticated() //verificações devem ser feitas para todas as requisições e que as bloqueadas através do hasRole devem ser autenticadas.
-	    .and().formLogin();
+	    .and().formLogin().loginPage("/login").permitAll() //utilizando a view de login personalizada e nao mais a padrão
+	    .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));//logout
 	}
 	
 	
