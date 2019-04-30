@@ -6,6 +6,8 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Preco {
+	
+	private static final long serialVersionUID = 1L;
 
 	private BigDecimal valor;
 	private TipoPreco tipo;

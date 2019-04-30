@@ -1,7 +1,7 @@
 
 <%@ attribute name="titulo" required="true" %><!-- podemos transformar o título da página um atributo obrigatório da págin -->
 <%@ attribute name="bodyClass" required="false" %>
-
+<%@ attribute name="extraScripts" fragment="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +30,8 @@
 <%@ include file="/WEB-INF/views/cabecalho.jsp" %>
 
 <jsp:doBody /><!-- conteudo da pagina  -->
+
+<jsp:invoke fragment="extraScripts"></jsp:invoke> <!-- todas as páginas podem ter fragmentos de código especificos -->
 
 <%@ include file="/WEB-INF/views/rodape.jsp" %>
 
