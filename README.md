@@ -29,3 +29,7 @@ senha do usuário: 123456
 
 ## Logout
 (http://localhost:8080/casadocodigo/logout)
+
+
+## SpringTest
+Se verificarmos o banco de dados de testes após a execução de qualquer teste, não teremos dados neste, o banco estará em branco, somente com as tabelas criadas. Isso acontece por que o Spring Test limpa todos os dados do banco para que um teste não seja prejudicado com dados deixados por outros testes.

@@ -7,19 +7,22 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.casadocodigo.loja.builders.ProdutoBuilder;
 import br.com.casadocodigo.loja.conf.JPAConfiguration;
+import br.com.casadocodigo.loja.confs.DataSourceConfigurationTest;
 import br.com.casadocodigo.loja.dao.ProdutoDAO;
 import br.com.casadocodigo.loja.models.Produto;
 import br.com.casadocodigo.loja.models.TipoPreco;
 
 //JUnit deverá carregar configurações do Spring Test para poder executar os testes
 @RunWith(SpringJUnit4ClassRunner.class) //classe irá executar os testes encontrados na nossa suite de testes.
-@ContextConfiguration(classes = {JPAConfiguration.class,ProdutoDAO.class})// classes de configurações para execução dos testes
+@ContextConfiguration(classes = {JPAConfiguration.class,ProdutoDAO.class, DataSourceConfigurationTest.class})// classes de configurações para execução dos testes
+@ActiveProfiles("test") //recurso no qual podemos agrupar configurações para determinadas partes da aplicação
 public class ProdutoDAOTest {
 
 	@Autowired
