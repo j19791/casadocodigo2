@@ -5,19 +5,31 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.casadocodigo.loja.builders.ProdutoBuilder;
+import br.com.casadocodigo.loja.conf.JPAConfiguration;
 import br.com.casadocodigo.loja.dao.ProdutoDAO;
 import br.com.casadocodigo.loja.models.Produto;
 import br.com.casadocodigo.loja.models.TipoPreco;
 
+//JUnit deverá carregar configurações do Spring Test para poder executar os testes
+@RunWith(SpringJUnit4ClassRunner.class) //classe irá executar os testes encontrados na nossa suite de testes.
+@ContextConfiguration(classes = {JPAConfiguration.class,ProdutoDAO.class})// classes de configurações para execução dos testes
 public class ProdutoDAOTest {
 
+	@Autowired
+	private ProdutoDAO produtoDAO;
 	
+	@Transactional //o metodo abaixo precisa de uma transação com o banco de dados para que tudo funcione corretamente
 	@Test
 	public void deveSomarTodosOsPrecosPorTipoLivro() {
 		
-		ProdutoDAO produtoDAO = new ProdutoDAO();
+		
 		
 		//3 produtos do tipo impresso, valor 10
 		List<Produto> livrosImpressos = ProdutoBuilder.newProduto(TipoPreco.IMPRESSO, BigDecimal.TEN).more(3).buildAll();
