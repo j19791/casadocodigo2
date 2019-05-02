@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 	    .antMatchers("/resources/**").permitAll() //permitindo o acesso a todos
 	    .antMatchers("/carrinho/**").permitAll() //permitindo o acesso a todos 
-	    .antMatchers("/pagamento/**").permitAll() //permitindo o acesso a todos
+	    .antMatchers("/pagamento/**").permitAll() //permitindo o acesso a todos (p/ dsv apenas, na produção, deverá ter um usuário logado)
 	    .antMatchers("/produtos/form").hasRole("ADMIN") //bloqueando o acesso para todos que não são ADMIN
 	    .antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN") //bloqueando o acesso para todos que não são ADMIN
 	    .antMatchers(HttpMethod.GET, "/produtos").hasRole("ADMIN") //bloqueando o acesso para todos que não são ADMIN

@@ -2,6 +2,7 @@ package br.com.casadocodigo.loja.conf;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.cache.CacheManager;
@@ -15,6 +16,8 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
@@ -124,6 +127,24 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
     @Bean //Objeto q será usado pelo Spring
     public LocaleResolver localeResolver(){
         return new CookieLocaleResolver();// armazenar essa mudança de idioma, se não o usuário terá que mudar de idioma toda vez que mudar de página. Também p/ carregar as páginas no idioma correto.
+    }
+    
+    
+    @Bean
+    public MailSender mailSender(){
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();//incluir no pom.xml a dependencia javax.mail
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setUsername("@gmail.com");
+        mailSender.setPassword("xxxx");
+        mailSender.setPort(587);
+
+        Properties mailProperties = new Properties();
+        mailProperties.put("mail.smtp.auth", true);//autenticação SMTP
+        mailProperties.put("mail.smtp.starttls.enable", true);// tipo de conexão segura 
+
+        mailSender.setJavaMailProperties(mailProperties);
+        return mailSender;
     }
     
 }
