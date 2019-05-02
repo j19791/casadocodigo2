@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -28,11 +29,13 @@ public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletI
 	}
 
 	@Override
-    protected Filter[] getServletFilters() {
-        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
-        encodingFilter.setEncoding("UTF-8");
-        return new Filter[] {encodingFilter};
-    }
+	protected Filter[] getServletFilters() {
+	    CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+	    encodingFilter.setEncoding("UTF-8");
+	    return new Filter[] {encodingFilter, new OpenEntityManagerInViewFilter()};
+	    //manter a sessão com o banco de dados até que a visualização da página seja carregada. Assim o carregamento dos preços (com lazy) serão feitos sem nenhum problema.
+	    //Prevenção p/ que o erro de carregamento de dados no banco não seja apresentado caso esqueçamos de realizar o join
+	}
 	
 	//veja tbm https://cursos.alura.com.br/forum/topico-atualizacao-resources-nao-sao-carregados-na-aula-10-58813
 	@Override

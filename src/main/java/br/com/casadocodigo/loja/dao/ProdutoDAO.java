@@ -24,8 +24,11 @@ public class ProdutoDAO {
 		manager.persist(produto);
 	}
 
+	
+	//Ao exibir os preços na listagem dos produtos  a conexão/sessão c/ bd já foi encerrada e com isto os preços não podem ser buscados. Os preços só estão sendo buscados em um segundo momento qdo necessários (Lazy Initialization do Hibernate para carregamento de coleções).
+	//carregue junto com os produtos, seus preços, tbm p/ que o número de consultas seja o menor possível
 	public List<Produto> listar() {
-		return manager.createQuery("select p from Produto p", Produto.class)
+		return manager.createQuery("select distinct(p) from Produto p join fetch p.precos", Produto.class)
 				.getResultList();
 	}
 
