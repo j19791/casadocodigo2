@@ -2,6 +2,7 @@ package br.com.casadocodigo.loja.controllers;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,6 +91,12 @@ public class ProdutosController {
 	    return dao.find(id);
 	    
 	    
+	}
+	
+	//ao lançamento da excessão, o Spring repasse a mesma para este método
+	@ExceptionHandler(Exception.class)//tratar qualquer tipo de exceção lançada. 
+	public String trataDetalheNaoEcontrado(){//NoResultException.class: ao buscar o produto no bd, o método getSingleResult ao perceber que o resultado não existe, lança uma exceção
+	    return "error";//ao lançamento deste tipo de erro, este seja executado, fazendo com que redirecione-o para uma página de erro mais amigável.
 	}
 	
 }
